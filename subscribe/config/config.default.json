@@ -44,7 +44,7 @@
     ],
     "crawl": {
         "enable": true,
-        "exclude": "",
+        "exclude": "ads,spam",
         "threshold": 5,
         "singlelink": true,
         "persist": {
@@ -59,12 +59,12 @@
         },
         "telegram": {
             "enable": true,
-            "pages": 5,
+            "pages": 10,
             "exclude": "",
             "users": {
                 "channel": {
-                    "include": "",
-                    "exclude": "",
+                    "include": "vmess,vless,clash,ss,free nodes,订阅,机场推荐,公益,节点,机场",
+                    "exclude": "ads,spam",
                     "config": {
                         "rename": "",
                         "xxxxxx": ""
@@ -75,7 +75,7 @@
         },
         "google": {
             "enable": false,
-            "exclude": "",
+            "exclude": "ads,spam",
             "notinurl": [],
             "push_to": []
         },
@@ -83,7 +83,7 @@
             "enable": true,
             "pages": 2,
             "push_to": [],
-            "exclude": "",
+            "exclude": "test,ads,example",
             "spams": []
         },
         "twitter": {
@@ -92,8 +92,8 @@
                 "username": {
                     "enable": true,
                     "num": 30,
-                    "include": "",
-                    "exclude": "",
+                    "include": "proxy,vless,vmess,clash,freeVPN,订阅,机场推荐,公益,节点,机场",
+                    "exclude": "ads,spam",
                     "config": {
                         "rename": "",
                         "xxxxxx": ""
@@ -108,7 +108,7 @@
                 "username": "",
                 "repo_name": "",
                 "commits": 3,
-                "exclude": "",
+                "exclude": "ads,spam",
                 "push_to": []
             }
         ],
@@ -116,8 +116,8 @@
             {
                 "enable": true,
                 "url": "",
-                "include": "",
-                "exclude": "",
+                "include": "proxy,vless,vmess,clash",
+                "exclude": "ads,spam",
                 "config": {
                     "rename": ""
                 },
@@ -136,7 +136,7 @@
                     "config": {
                         "enable": true,
                         "liveness": true,
-                        "exclude": "",
+                        "exclude": "ads,spam",
                         "rename": "",
                         "push_to": []
                     }
