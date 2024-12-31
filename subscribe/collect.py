@@ -160,41 +160,40 @@ def assign(
 
             overwrite = True
 
-   # 加载自定义机场列表
-customize_link = utils.trim(kwargs.get("customize_link", ""))
-if customize_link:
-    if isurl(customize_link):
-        subscription_urls = utils.http_get(url=customize_link).splitlines()
-        for url in subscription_urls:
-            if isurl(url):
-                name = crawl.naming_task(url=url)
-                tasks.append(
-                    TaskConfig(
-                        name=name,
-                        sub=url,
-                        bin_name=bin_name,
-                        special_protocols=special_protocols
-                    )
-                )
-    else:
-        local_file = os.path.join(DATA_BASE, customize_link)
-        if local_file != fullpath and os.path.exists(local_file) and os.path.isfile(local_file):
-            with open(local_file, "r", encoding="UTF8") as f:
-                subscription_urls = f.read().splitlines()
-                for url in subscription_urls:
-                    if isurl(url):
-                        name = crawl.naming_task(url=url)
-                        tasks.append(
-                            TaskConfig(
-                                name=name,
-                                sub=url,
-                                bin_name=bin_name,
-                                special_protocols=special_protocols
-                            )
-                        )
+    # 加载自定义机场列表
+    customize_link = utils.trim(kwargs.get("customize_link", ""))
+    if customize_link:
+        if isurl(customize_link):
+            domains.update(parse_domains(content=utils.http_get(url=customize_link)))
+        else:
+            local_file = os.path.join(DATA_BASE, customize_link)
+            if local_file != fullpath and os.path.exists(local_file) and os.path.isfile(local_file):
+                with open(local_file, "r", encoding="UTF8") as f:
+                    domains.update(parse_domains(content=str(f.read())))
 
-if not tasks:
-    logger.error("cannot collect any new subscription links")
+    if not domains:
+        logger.error("cannot collect any new airport for free use")
+        return tasks
+
+    if overwrite:
+        crawl.save_candidates(candidates=domains, filepath=fullpath, delimiter=delimiter)
+
+    for domain, param in domains.items():
+        name = crawl.naming_task(url=domain)
+        tasks.append(
+            TaskConfig(
+                name=name,
+                domain=domain,
+                coupon=param.get("coupon", ""),
+                invite_code=param.get("invite_code", ""),
+                api_prefix=param.get("api_prefix", ""),
+                bin_name=bin_name,
+                rigid=rigid,
+                chuck=chuck,
+                special_protocols=special_protocols,
+            )
+        )
+
     return tasks
 
 
